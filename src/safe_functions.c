@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:49:39 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/02 21:02:56 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/05 08:03:32 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,4 @@ static void handle_thread_error(int status, t_opcode opcode)
 		else
 			err_exit("Wrong opcode for thread handle");
 	}
+	

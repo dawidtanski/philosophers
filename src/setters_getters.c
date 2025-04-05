@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 21:05:36 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/02 21:18:17 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/05 08:04:56 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,11 @@ long	get_long(t_mtx mutex, long *src)
 	ret = *src;
 	safe_mutex_handle(&mutex, UNLOCK);
 	return (ret);
+}
+
+void	increase_long(t_mtx mutex, long *src)
+{
+	safe_mutex_handle(&mutex, LOCK);
+	*src++;
+	safe_mutex_handle(&mutex, UNLOCK);
 }
