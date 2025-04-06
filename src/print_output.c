@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 20:46:14 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/04 13:02:57 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/06 16:25:48 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,24 @@ void	print_output(t_status status, t_philo *philo)
 	int		philo_id;
 
 	philo_id = philo->philo_id;
-	start_time = philo->table->start_simulation_time;
+	start_time = get_long(&philo->table->table_mtx, &philo->table->start_simulation_time);
 	timestamp = get_time(MILLISECOND) - start_time;
-	if (status == SLEEPING && !simulation_finished(philo->table))
+	// printf(Y "\n %ld \n",start_time);
+	// printf(Y "\n %ld \n",timestamp);
+	safe_mutex_handle(&philo->table->write_mtx, LOCK);
+	if (status == SLEEPING && !get_bool(&philo->table->table_mtx, &philo->table->simulation_finished))
 	{
 		printf(W "%-6ld" RST " %d is sleeping\n" RST, timestamp, philo_id);
 	}
-	else if (status == EATING && !simulation_finished(philo->table))
+	else if (status == EATING && !get_bool(&philo->table->table_mtx, &philo->table->simulation_finished))
 	{
 		printf(W "%-6ld" RST " %d is eating\n" RST, timestamp, philo_id);
 	}
-	else if (status == THINKING && !simulation_finished(philo->table))
+	else if (status == THINKING && !get_bool(&philo->table->table_mtx, &philo->table->simulation_finished))
 	{
 		printf(W "%-6ld" RST " %d is thinking\n" RST, timestamp, philo_id);
 	}
-	else if (status == DIED && simulation_finished(philo->table))
+	else if (status == DIED && get_bool(&philo->table->table_mtx, &philo->table->all_threads_ready) &&!get_bool(&philo->table->table_mtx, &philo->table->simulation_finished))
 	{
 		printf(R "%-6ld" " Philo %d died\n" RST, timestamp, philo_id);
 	}
@@ -44,7 +47,6 @@ void	print_output(t_status status, t_philo *philo)
 		printf(W "%-6ld" RST " %d has taken a fork\n" RST, timestamp, philo_id);
 	}
 	else
-	{
 		err_exit("Printing output failed.");
-	}
+	safe_mutex_handle(&philo->table->write_mtx, UNLOCK);
 }

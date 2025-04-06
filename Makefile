@@ -23,6 +23,16 @@ INC		= -I $(INC_DIR)
 
 #SRC
 SRC			=	main.c \
+				utils.c \
+				safe_functions.c \
+				setters_getters.c \
+				parse.c \
+				struct_init.c \
+				monitor.c \
+				print_output.c \
+				simulation.c \
+				synchro.c \
+
 
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))

@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:48 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/03 20:43:28 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/05 11:20:53 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 		parse_input(&table, argv);
 		data_init(&table);
 		simulation(&table); // TODO
-		clean(&table); // TODO
+		//clean(&table); // TODO
 	}
 	else
 	{

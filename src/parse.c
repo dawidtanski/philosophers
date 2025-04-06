@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:38:57 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/02 13:24:46 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/05 11:31:18 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,25 @@ static bool is_space(char c)
 static long input_checker(char *str)
 {
 	long		number;
-	int			len;
+	size_t			len;
 
 	len = 0;
 	while (is_space(*str))
 		str++;
-	if (*str = '+')
+	if (*str == '+')
 		str++;
 	if (*str == '-')
 		err_exit("This program doesn't take negative numbers as input!");
 	while (str[len])
 		len++;
-	number = save_malloc(len);
+	number = 0;
 	while (*str)
 	{
 		if (is_digit(*str))
 		{
 			number *= 10;
 			number += *str - 48;
+			str++;
 		}
 	}
 	if (number > INT_MAX)
@@ -58,7 +59,7 @@ static long input_checker(char *str)
 
 //  ./philo 5 800 200 200 7
 
-int	parse_input(t_table *table, char *argv[])
+void	parse_input(t_table *table, char *argv[])
 {
 	table->num_of_philos = input_checker(argv[1]);
 	table->time_to_die = input_checker(argv[2]);

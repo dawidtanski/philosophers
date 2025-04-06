@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:56 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/05 08:13:03 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/06 16:23:32 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define RST	"\033[0m" /*RESET*/
 
 typedef pthread_mutex_t t_mtx;
+typedef	struct s_table t_table;
 
 typedef	enum s_status
 {
@@ -72,18 +73,18 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int		philo_id;
-	int		meals_counter;
+	long	meals_counter;
 	long	last_meal_time;
-	t_fork	first_fork;
-	t_fork	second_fork;
+	t_fork	*first_fork;
+	t_fork	*second_fork;
 	bool	full;
 	pthread_t	thread_id;
 	t_mtx	philo_mtx;
-	t_table	*table
+	t_table	*table;
 
 }		t_philo;
 
-typedef struct s_table
+struct s_table
 {
 	long		num_of_philos;
 	long		time_to_die;
@@ -91,19 +92,20 @@ typedef struct s_table
 	long		time_to_sleep;
 	long		meals_limit;
 	long		start_simulation_time;
+	bool		all_threads_ready;
 	bool		simulation_finished;
 	pthread_t	waiter;
+	t_mtx		table_mtx;
+	t_mtx		write_mtx;
 	t_philo		*philos_arr;
 	t_fork		*forks_arr;
-}		t_table;
+};
 
 // Main functions
-data_init(&table);
-philos_dinner(&table);
-clean(&table);
-
-// Parsing an input
-int	parse_input(t_table *table, char *argv[]);
+void	parse_input(t_table *table, char *argv[]);
+void	data_init(t_table *table);
+void	simulation(t_table *table);
+//clean(&table);
 
 // Exit with error printed
 int err_exit(const char *str);
@@ -111,21 +113,26 @@ int err_exit(const char *str);
 // Safe functions
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
 void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
+void	*safe_malloc(size_t	size);
 
 // Setters and getters
-void	set_bool(t_mtx mutex, bool *dest, bool value);
-bool	get_bool(t_mtx mutex, bool *src);
-void	set_long(t_mtx mutex, long *dest, long value);
-long	get_long(t_mtx mutex, long *src);
-void	increase_long(t_mtx mutex, long *src);
+void	set_bool(t_mtx *mutex, bool *dest, bool value);
+bool	get_bool(t_mtx *mutex, bool *src);
+void	set_long(t_mtx *mutex, long *dest, long value);
+long	get_long(t_mtx *mutex, long *src);
+void	increase_long(t_mtx *mutex, long *src);
 
 // Time management
 long get_time(t_time_unit unit);
-void	go_sleep(long	time, t_time_unit	unit);
+void	go_sleep(long	time);
 
 // Printing output
 void	print_output(t_status status, t_philo *philo);
 
+// Work for our waiter
+void *monitor(void	*data);
 
+// Synchro
+void wait_all_threads(t_table *table);
 
 #endif
