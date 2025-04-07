@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:01:37 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/06 16:23:45 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:51:44 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void table_init(t_table *table)
 	table->simulation_finished = false;
 	table->philos_arr = safe_malloc(sizeof(t_philo) * table->num_of_philos);
 	table->forks_arr = safe_malloc(sizeof(t_fork) * table->num_of_philos);
+	table->threads_running_nbr = 0;
 	safe_mutex_handle(&table->table_mtx, INIT);
 	safe_mutex_handle(&table->write_mtx, INIT);
 	set_bool(&table->table_mtx, &table->simulation_finished, false);

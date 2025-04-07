@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:56 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/06 16:23:32 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:08:37 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ struct s_table
 	long		time_to_sleep;
 	long		meals_limit;
 	long		start_simulation_time;
+	long		threads_running_nbr;
 	bool		all_threads_ready;
 	bool		simulation_finished;
 	pthread_t	waiter;
@@ -134,5 +135,6 @@ void *monitor(void	*data);
 
 // Synchro
 void wait_all_threads(t_table *table);
+bool	all_threads_running(t_mtx *mutex, long *threads, long num_of_philos);
 
 #endif
