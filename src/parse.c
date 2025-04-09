@@ -6,13 +6,13 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:38:57 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/05 11:31:18 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/09 12:04:12 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static bool is_digit(char c)
+static bool	is_digit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (true);
@@ -20,7 +20,7 @@ static bool is_digit(char c)
 		return (false);
 }
 
-static bool is_space(char c)
+static bool	is_space(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (true);
@@ -28,10 +28,10 @@ static bool is_space(char c)
 		return (false);
 }
 
-static long input_checker(char *str)
+static long	input_checker(char *str)
 {
-	long		number;
-	size_t			len;
+	long	number;
+	size_t	len;
 
 	len = 0;
 	while (is_space(*str))
@@ -57,8 +57,6 @@ static long input_checker(char *str)
 	return (number);
 }
 
-//  ./philo 5 800 200 200 7
-
 void	parse_input(t_table *table, char *argv[])
 {
 	table->num_of_philos = input_checker(argv[1]);
@@ -70,4 +68,3 @@ void	parse_input(t_table *table, char *argv[])
 	else
 		table->meals_limit = -1;
 }
-

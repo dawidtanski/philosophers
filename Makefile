@@ -32,7 +32,8 @@ SRC			=	main.c \
 				print_output.c \
 				simulation.c \
 				synchro.c \
-
+				clean.c \
+				simulation_utils.c \
 
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))

@@ -6,21 +6,21 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:56 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/07 15:08:37 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/09 12:27:26 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <pthread.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <errno.h>
+# include <pthread.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <errno.h>
 
 // ANSI Escape Sequences for Bold Text Colors
 # define R		"\033[1;31m" /*BOLD_RED*/
@@ -33,10 +33,10 @@
 
 # define RST	"\033[0m" /*RESET*/
 
-typedef pthread_mutex_t t_mtx;
-typedef	struct s_table t_table;
+typedef pthread_mutex_t	t_mtx;
+typedef struct s_table	t_table;
 
-typedef	enum s_status
+typedef enum s_status
 {
 	SLEEPING,
 	GRAB_1ST_FORK,
@@ -46,7 +46,7 @@ typedef	enum s_status
 	DIED,
 }		t_status;
 
-typedef	enum e_opcode
+typedef enum e_opcode
 {
 	LOCK,
 	UNLOCK,
@@ -72,15 +72,15 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int		philo_id;
-	long	meals_counter;
-	long	last_meal_time;
-	t_fork	*first_fork;
-	t_fork	*second_fork;
-	bool	full;
+	int			philo_id;
+	long		meals_counter;
+	long		last_meal_time;
+	t_fork		*first_fork;
+	t_fork		*second_fork;
+	bool		full;
 	pthread_t	thread_id;
-	t_mtx	philo_mtx;
-	t_table	*table;
+	t_mtx		philo_mtx;
+	t_table		*table;
 
 }		t_philo;
 
@@ -91,10 +91,10 @@ struct s_table
 	long		time_to_eat;
 	long		time_to_sleep;
 	long		meals_limit;
-	long		start_simulation_time;
+	long		start_t;
 	long		threads_running_nbr;
 	bool		all_threads_ready;
-	bool		simulation_finished;
+	bool		sim_end;
 	pthread_t	waiter;
 	t_mtx		table_mtx;
 	t_mtx		write_mtx;
@@ -106,14 +106,18 @@ struct s_table
 void	parse_input(t_table *table, char *argv[]);
 void	data_init(t_table *table);
 void	simulation(t_table *table);
-//clean(&table);
+
+// Simulaiton utils - eat/sleep/think
+void	sleeping(t_philo	*philo);
+void	think(t_philo *philo);
+void	eat(t_philo *philo);
 
 // Exit with error printed
-int err_exit(const char *str);
+int		err_exit(const char	*str);
 
 // Safe functions
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
-void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
+void	thread_handle(pthread_t *t, void *(*f)(void *), void *d, t_opcode o);
 void	*safe_malloc(size_t	size);
 
 // Setters and getters
@@ -124,17 +128,21 @@ long	get_long(t_mtx *mutex, long *src);
 void	increase_long(t_mtx *mutex, long *src);
 
 // Time management
-long get_time(t_time_unit unit);
-void	go_sleep(long	time);
+long	get_time(t_time_unit unit);
+void	go_sleep(long time);
 
 // Printing output
 void	print_output(t_status status, t_philo *philo);
 
 // Work for our waiter
-void *monitor(void	*data);
+void	*monitor(void	*data);
 
 // Synchro
-void wait_all_threads(t_table *table);
-bool	all_threads_running(t_mtx *mutex, long *threads, long num_of_philos);
+void	wait_all_threads(t_table *table);
+// All threads running
+bool	a_t_r(t_mtx *mutex, long *threads, long num_of_philos);
+
+// Cleaning
+void	clean(t_table *table);
 
 #endif
