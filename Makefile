@@ -17,8 +17,8 @@ OBJ_DIR	=./obj
 INC_DIR =./inc
 
 CC = gcc
-##  
-CFLAGS = -fsanitize=thread -Wall -Wextra -Werror -g -lpthread
+##  -fsanitize=thread
+CFLAGS =  -Wall -Wextra -Werror -g -pthread
 INC		= -I $(INC_DIR)
 
 #SRC
