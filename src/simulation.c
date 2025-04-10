@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:55:34 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/09 12:36:17 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/10 15:42:29 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	*dinner(void	*arg)
 	wait_all_threads(philo->table);
 	increase_long(&philo->table->table_mtx, &philo->table->threads_running_nbr);
 	set_long(&philo->philo_mtx, &philo->last_meal_time, philo->table->start_t);
+	desynchronize_philos(philo);
 	while (!get_bool(&philo->table->table_mtx, &philo->table->sim_end))
 	{
 		if (get_bool(&philo->philo_mtx, &philo->full))

@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:56 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/09 12:27:26 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/10 15:41:39 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,8 @@ bool	a_t_r(t_mtx *mutex, long *threads, long num_of_philos);
 
 // Cleaning
 void	clean(t_table *table);
+
+// Desynchronizing
+void	desynchronize_philos(t_philo *philo);
 
 #endif
