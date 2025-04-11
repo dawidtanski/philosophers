@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:39:09 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/09 12:00:29 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/11 17:36:06 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ long	get_time(t_time_unit unit)
 	struct timeval	tv;
 	long			res;
 
+	res = 0;
 	if (gettimeofday(&tv, NULL) != 0)
 		err_exit("Gettimeoftheday failure");
 	if (unit == SECOND)

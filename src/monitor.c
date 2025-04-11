@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:06:49 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/10 15:45:41 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/11 17:34:47 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static bool	everyone_full(t_table *table)
 {
 	bool	sim_fin;
 	int		i;
+	long	philos_num;
 	
+	philos_num = get_long(&table->table_mtx, &table->num_of_philos);
 	sim_fin = get_bool(&table->table_mtx, &table->sim_end);
 	while (!sim_fin && get_bool(&table->table_mtx, &table->all_threads_ready))
     {
 		i = 0;
-		while (i < table->num_of_philos)
+		while (i < philos_num)
 		{
 			if (!philo_full(&table->philos_arr[i]))
 			return (false);
