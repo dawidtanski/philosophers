@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:18:46 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/09 12:30:18 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/11 18:14:15 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	think(t_philo *philo)
 	t_think = t_eat * 2 - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	go_sleep(t_think * 0.3);
+	go_sleep(t_think * 0.42);
 }
 
 void	eat(t_philo *philo)
