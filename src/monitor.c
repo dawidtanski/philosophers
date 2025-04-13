@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:06:49 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/11 17:34:47 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/13 19:14:33 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	*monitor(void	*data)
 	sim_fin = get_bool(&table->table_mtx, &table->sim_end);
 	p_num = get_long(&table->table_mtx, &table->num_of_philos);
 	while (!a_t_r(&table->table_mtx, &table->threads_running_nbr, p_num))
-		;
+		usleep(100);
+	//	;
 	while (!sim_fin && get_bool(&table->table_mtx, &table->all_threads_ready))
 	{
 		i = 0;

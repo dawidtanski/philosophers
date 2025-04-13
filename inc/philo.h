@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:56 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/10 15:41:39 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:26:18 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	increase_long(t_mtx *mutex, long *src);
 
 // Time management
 long	get_time(t_time_unit unit);
-void	go_sleep(long time);
+void	precise_usleep(long usec, t_table *table);
 
 // Printing output
 void	print_output(t_status status, t_philo *philo);

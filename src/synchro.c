@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:15:35 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/11 18:09:10 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:26:23 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	desynchronize_philos(t_philo *philo)
 	if (philo->table->num_of_philos % 2 == 0)
 	{
 		if (philo->philo_id % 2 == 0)
-			go_sleep(30);
+			precise_usleep(0.03, philo->table);
 	}
 	else
 	{

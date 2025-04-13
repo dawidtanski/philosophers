@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:39:09 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/11 17:36:06 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:26:44 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,26 @@ long	get_time(t_time_unit unit)
 	return (res);
 }
 
-void	go_sleep(long time)
+void	precise_usleep(long usec, t_table *table)
 {
 	long	start;
-	long	end;
+	long	elapsed;
+	long	remaining;
 
-	start = get_time(MILLISECOND);
-	while (1)
+	start = get_time(MICROSECOND);
+	while (get_time(MICROSECOND) - start < usec)
 	{
-		if ((time > (long) 1e3) || (time > 1) || (time > (long)1e6))
-			usleep((time * (long) 1e3) / 2);
-		end = get_time(MILLISECOND);
-		if (end >= time + start)
-			return ;
+		if (get_bool(&table->table_mtx, &table->sim_end))
+			break ;
+		elapsed = get_time(MICROSECOND) - start;
+		remaining = usec - elapsed;
+		if (remaining > 1e3)
+			usleep(remaining / 2);
+		else
+		{
+			while (get_time(MICROSECOND) - start < usec)
+				;
+		}
 	}
 }
 
