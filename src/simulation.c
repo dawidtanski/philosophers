@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:55:34 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/13 21:26:05 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/14 12:27:45 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	*one_philo_simulation(void	*arg)
 	wait_all_threads(philo->table);
 	increase_long(&philo->table->table_mtx, &philo->table->threads_running_nbr);
 	print_output(GRAB_1ST_FORK, philo);
-	precise_usleep(philo->table->time_to_die, philo->table);
+	precise_usleep(philo->table->time_to_die * 1000, philo->table);
 	print_output(DIED, philo);
 	set_bool(&philo->table->table_mtx, &philo->table->sim_end, true);
 	return (NULL);

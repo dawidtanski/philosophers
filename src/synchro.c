@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:15:35 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/13 21:26:23 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/14 12:38:04 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,20 @@ bool	a_t_r(t_mtx *mutex, long *threads, long num_of_philos)
 
 void	desynchronize_philos(t_philo *philo)
 {
-	// long	eat_time;
-
-	// eat_time = get_long(&philo->table->table_mtx, &philo->table->time_to_eat);
 	if (philo->table->num_of_philos % 2 == 0)
 	{
 		if (philo->philo_id % 2 == 0)
-			precise_usleep(0.03, philo->table);
+			precise_usleep(30000, philo->table);
 	}
 	else
 	{
 		if (philo->philo_id % 2)
 			think(philo);
 	}
+}
+
+void	wait_monitor(t_table *table, long p_num)
+{
+	while (!a_t_r(&table->table_mtx, &table->threads_running_nbr, p_num))
+		;
 }

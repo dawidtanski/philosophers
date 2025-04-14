@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:06:49 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/13 19:14:33 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/14 12:18:16 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	philo_died(t_philo *philo)
 	return (false);
 }
 
-static bool philo_full(t_philo *philo)
+static bool	philo_full(t_philo *philo)
 {
 	if (get_bool(&philo->philo_mtx, &philo->full))
 		return (true);
@@ -36,19 +36,18 @@ static bool philo_full(t_philo *philo)
 
 static bool	everyone_full(t_table *table)
 {
-	bool	sim_fin;
 	int		i;
 	long	philos_num;
-	
+
 	philos_num = get_long(&table->table_mtx, &table->num_of_philos);
-	sim_fin = get_bool(&table->table_mtx, &table->sim_end);
-	while (!sim_fin && get_bool(&table->table_mtx, &table->all_threads_ready))
-    {
+	while (!get_bool(&table->table_mtx, &table->sim_end)
+		&& get_bool(&table->table_mtx, &table->all_threads_ready))
+	{
 		i = 0;
 		while (i < philos_num)
 		{
 			if (!philo_full(&table->philos_arr[i]))
-			return (false);
+				return (false);
 			i++;
 		}
 		set_bool(&table->table_mtx, &table->sim_end, true);
@@ -61,19 +60,16 @@ void	*monitor(void	*data)
 {
 	t_table	*table;
 	int		i;
-	bool	sim_fin;
 	long	p_num;
 
 	table = (t_table *)data;
-	sim_fin = get_bool(&table->table_mtx, &table->sim_end);
 	p_num = get_long(&table->table_mtx, &table->num_of_philos);
-	while (!a_t_r(&table->table_mtx, &table->threads_running_nbr, p_num))
-		usleep(100);
-	//	;
-	while (!sim_fin && get_bool(&table->table_mtx, &table->all_threads_ready))
+	wait_monitor(table, p_num);
+	while (!get_bool(&table->table_mtx, &table->sim_end)
+		&& get_bool(&table->table_mtx, &table->all_threads_ready))
 	{
-		i = 0;
-		while (i < p_num && !sim_fin)
+		i = -1;
+		while (++i < p_num && !get_bool(&table->table_mtx, &table->sim_end))
 		{
 			if (everyone_full(table))
 				return (NULL);
@@ -83,7 +79,6 @@ void	*monitor(void	*data)
 				set_bool(&table->table_mtx, &table->sim_end, true);
 				return (NULL);
 			}
-			i++;
 		}
 	}
 	return (NULL);

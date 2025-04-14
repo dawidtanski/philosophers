@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:44:56 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/13 21:26:18 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/14 12:01:03 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,6 @@ void	clean(t_table *table);
 
 // Desynchronizing
 void	desynchronize_philos(t_philo *philo);
+void	wait_monitor(t_table *table, long p_num);
 
 #endif
