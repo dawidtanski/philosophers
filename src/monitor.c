@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:06:49 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/14 12:18:16 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/14 13:31:40 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	*monitor(void	*data)
 		i = -1;
 		while (++i < p_num && !get_bool(&table->table_mtx, &table->sim_end))
 		{
-			if (everyone_full(table))
-				return (NULL);
 			if (philo_died(table->philos_arr + i))
 			{
 				print_output(DIED, table->philos_arr + i);
@@ -80,6 +78,8 @@ void	*monitor(void	*data)
 				return (NULL);
 			}
 		}
+		if (everyone_full(table))
+			return (NULL);
 	}
 	return (NULL);
 }
