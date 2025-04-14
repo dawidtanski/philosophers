@@ -6,7 +6,7 @@
 /*   By: dtanski <dtanski@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:06:49 by dtanski           #+#    #+#             */
-/*   Updated: 2025/04/14 13:31:40 by dtanski          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:17:25 by dtanski          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	*monitor(void	*data)
 		}
 		if (everyone_full(table))
 			return (NULL);
+		usleep(1000);
 	}
 	return (NULL);
 }
